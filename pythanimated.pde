@@ -1,4 +1,12 @@
+final float TOTAL_BASE = 90;
+final int TOTAL_DEPTH = 7;
+final int STEPS = 400;
+
+final boolean RECORDING = false;
+
 void pythag(float base, float lth, int depth) {
+  fill((float)depth / TOTAL_DEPTH * 255 * 5 / 6.0f, 255, 255);
+  
   rect(0, 0, base, base);
   
   if (depth > 0) {
@@ -18,16 +26,21 @@ void pythag(float base, float lth, int depth) {
   }
 }
 
-float th = 0;
+int th = 0;
 
 void setup() {
-  size(1500, 800);
-  stroke(255);
+  size(1000, 1000);
+  noStroke();
+  colorMode(HSB, 255, 255, 255);
 }
 
 void draw() {
-  translate(width / 2 - 25, 50);
+  translate(width / 2 - TOTAL_BASE / 2, 50);
   background(0);
-  pythag(100, radians(th % 90), 5);
-  th += 0.5;
+  pythag(TOTAL_BASE, HALF_PI * (th % STEPS) / STEPS, TOTAL_DEPTH);
+  th += 1;
+  
+  if (RECORDING && th < STEPS) {
+    saveFrame("frames/pyth-#######.png");
+  }
 }
